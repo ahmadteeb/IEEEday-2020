@@ -56,6 +56,7 @@ async def on_voice_state_update(member, before, after):
                         return
             elif(after.channel.id == 764134656781189152):
                 await member.edit(mute=False)
+                await removeRoles(member, before)
             else:
                 try:
                     for channel in Game_channels[after.channel.id]["channel"]:
@@ -64,6 +65,7 @@ async def on_voice_state_update(member, before, after):
                         if(len(list(IEEE_Client.get_channel(channel).members)) < Game_channels[after.channel.id]["limit"]):
                             await member.edit(voice_channel=IEEE_Client.get_channel(channel))
                             return
+                    #add new channels
                     new_channel = await IEEE_Client.get_guild(ctx.message.guild.id).create_voice_channel(
                                             f"Room {Game_channels[after.channel.id]['Room#']+1}", 
                                             category=discord.utils.get(IEEE_Client.get_guild(ctx.message.guild.id).categories, id=Game_channels[after.channel.id]['category']),
