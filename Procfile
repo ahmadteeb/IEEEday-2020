@@ -1,0 +1,1 @@
+worker: python 'IEEE Day 2020 bot.py'
