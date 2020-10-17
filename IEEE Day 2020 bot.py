@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands
-import random
 
-IEEE_Client = commands.Bot(command_prefix = '!')
+intents = discord.Intents.default()
+intents.members = True
+IEEE_Client = commands.Bot(command_prefix = '!', intents=intents)
 
 TOKEN = "NzY1Njk3OTg1MTYxMzMwNzI5.X4Yl0Q.qy8WwQTUNkTeRALpsQbmiVXVJDU"
 ServerID = 764134656337248287
@@ -62,7 +63,7 @@ async def on_voice_state_update(member, before, after):
                 if(discord.utils.get(IEEE_Client.get_guild(ServerID).roles, id=767113722488684544) not in member.roles):
                     global Member_Number
                     try:
-                        await member.edit(nick=f"{Member_Number} {member.name if(member.nick == None) else member.nick}")
+                        await member.edit(nick=f"#{Member_Number} {member.name if(member.nick == None) else member.nick}")
                     except discord.errors.Forbidden:
                         return
                     await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
@@ -111,9 +112,10 @@ async def on_reaction_add(reaction, member):
             await member.send(f"You are organizer please change your nickname to '{member.name if(member.nick == None) else member.nick} 🇹🇳' manually.")
 
 @IEEE_Client.event
-async def on_member_join(ctx, member):
+async def on_member_join(member):
     global Member_Number
-    await member.edit(nick=f"{Member_Number} {member.name if(member.nick == None) else member.nick}")
+    print(member)
+    await member.edit(nick=f"#{Member_Number} {member.name if(member.nick == None) else member.nick}")
     await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
     Member_Number += 1
 
