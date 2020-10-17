@@ -33,15 +33,15 @@ async def removeRoles(member, before):
 @IEEE_Client.event
 async def on_ready():
     print("IEEE Bot is Ready!")
-    # embed=discord.Embed(title="Choose your country:", color=discord.Colour(0x0059ff))
-    # embed.set_author(name="IEEE Day 2020")
-    # embed.add_field(name="Jordan", value=":flag_jo:", inline=True)
-    # embed.add_field(name="Tunisia", value=":flag_tn:", inline=True)
-    # channel = IEEE_Client.get_channel(764134656781189151) #Welcome text channel 
-    # embed_msg = await channel.send(embed=embed)
-    # await embed_msg.add_reaction("🇯🇴")
-    # await embed_msg.add_reaction("🇹🇳")
-    # await channel.send(embed=discord.Embed(description="[Click here to see the rules](https://discord.com/channels/765698106405945344/766430294973612032/766430306092843029)"))
+    embed=discord.Embed(title="Choose your country:", color=discord.Colour(0x0059ff))
+    embed.set_author(name="IEEE Day 2020")
+    embed.add_field(name="Jordan", value=":flag_jo:", inline=True)
+    embed.add_field(name="Tunisia", value=":flag_tn:", inline=True)
+    channel = IEEE_Client.get_channel(764134656781189151) #Welcome text channel 
+    embed_msg = await channel.send(embed=embed)
+    await embed_msg.add_reaction("🇯🇴")
+    await embed_msg.add_reaction("🇹🇳")
+    await channel.send(embed=discord.Embed(description="[Click here to see the rules](https://discordapp.com/channels/764134656337248287/766806535980187648/767016041242951731)", color=discord.Colour(0x0059ff)))
 
 @IEEE_Client.event
 async def on_voice_state_update(member, before, after):
@@ -54,6 +54,8 @@ async def on_voice_state_update(member, before, after):
                         await removeRoles(member, before)
                     except KeyError:
                         return
+            elif(after.channel.id == 764134656781189152):
+                await member.edit(mute=False)
             else:
                 try:
                     for channel in Game_channels[after.channel.id]["channel"]:
