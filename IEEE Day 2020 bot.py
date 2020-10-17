@@ -114,7 +114,6 @@ async def on_reaction_add(reaction, member):
 @IEEE_Client.event
 async def on_member_join(member):
     global Member_Number
-    print(member)
     await member.edit(nick=f"#{Member_Number} {member.name if(member.nick == None) else member.nick}")
     await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
     Member_Number += 1
