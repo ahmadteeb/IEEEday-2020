@@ -59,7 +59,7 @@ async def on_voice_state_update(member, before, after):
                     await removeRoles(member, before)
                 except KeyError:
                     return
-            elif(after.channel.id == 767089774628175884):
+            elif(after.channel.id == 767089774628175884): #welcome
                 if(discord.utils.get(IEEE_Client.get_guild(ServerID).roles, id=767113722488684544) not in member.roles):
                     global Member_Number
                     try:
@@ -68,7 +68,7 @@ async def on_voice_state_update(member, before, after):
                         return
                     await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
                     Member_Number += 1
-            elif(after.channel.id == 764134656781189152):
+            elif(after.channel.id == 764134656781189152): #mainGame
                 await member.edit(mute=False)
                 await removeRoles(member, before)
             else:
