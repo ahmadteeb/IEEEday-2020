@@ -6,9 +6,6 @@ intents.members = True
 IEEE_Client = commands.Bot(command_prefix = '!', intents=intents)
 
 TOKEN = "NzY1Njk3OTg1MTYxMzMwNzI5.X4Yl0Q.qy8WwQTUNkTeRALpsQbmiVXVJDU"
-ServerID = 764134656337248287
-global Member_Number
-Member_Number = 1
 
 Workshop_channels = {766007764970766336:{"role":766662068975304727, "move_channel":766006185051553813}, #room 1 channel
                      766007917148635158:{"role":766671973521817620, "move_channel":766006320813572134}, #room 2 channel
@@ -60,14 +57,8 @@ async def on_voice_state_update(member, before, after):
                 except KeyError:
                     return
             elif(after.channel.id == 767089774628175884): #welcome
-                if(discord.utils.get(IEEE_Client.get_guild(ServerID).roles, id=767113722488684544) not in member.roles):
-                    global Member_Number
-                    try:
-                        await member.edit(nick=f"#{Member_Number} {member.name if(member.nick == None) else member.nick}")
-                    except discord.errors.Forbidden:
-                        return
-                    await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
-                    Member_Number += 1
+                await removeRoles(member, before)
+                await member.edit(mute=False)
             elif(after.channel.id == 764134656781189152): #mainGame
                 await member.edit(mute=False)
                 await removeRoles(member, before)
@@ -110,13 +101,6 @@ async def on_reaction_add(reaction, member):
             await member.add_roles(discord.utils.get(member.guild.roles, id=767016646510379058)) #add tunisia role
         except discord.errors.Forbidden:
             await member.send(f"You are organizer please change your nickname to '{member.name if(member.nick == None) else member.nick} 🇹🇳' manually.")
-
-@IEEE_Client.event
-async def on_member_join(member):
-    global Member_Number
-    await member.edit(nick=f"#{Member_Number} {member.name if(member.nick == None) else member.nick}")
-    await member.add_roles(discord.utils.get(member.guild.roles, id=767113722488684544))
-    Member_Number += 1
 
 @IEEE_Client.command()
 @commands.has_role("Moderators")
